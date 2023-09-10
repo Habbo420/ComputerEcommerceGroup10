@@ -24,14 +24,14 @@ class InvoiceServiceImplTest {
     @Autowired
     private InvoiceServiceImpl service;
 
-    private static Country southAfrica = CountryFactory.createCountry(
+    private static final Country southAfrica = CountryFactory.createCountry(
             "South Africa"
     );
-    private static  City homeCity = CityFactory.createCity(
+    private static final City homeCity = CityFactory.createCity(
             "Cape Town",
             southAfrica
     );
-    private static  Address homeAddress = AddressFactory.buildAddress(
+    private static final Address homeAddress = AddressFactory.buildAddress(
             "53 Main Road",
             "6045",
             homeCity
@@ -68,12 +68,14 @@ class InvoiceServiceImplTest {
         assertEquals(invoice.getInvoiceNumber(), invoiceCreated.getInvoiceNumber());
         System.out.println("Created Invoice: " + invoiceCreated);
     }
+
     @Test
     void b_read(){
         Invoice invoiceRead = service.read(invoice.getInvoiceNumber());
         assertNotNull(invoiceRead);
         System.out.println("Read " + invoiceRead);
     }
+
     @Test
     @Disabled
     void c_update(){
@@ -82,6 +84,7 @@ class InvoiceServiceImplTest {
         assertNotNull(service.update(updatedInvoice));
         System.out.println("Updated -> " + updatedInvoice);
     }
+
     @Test
     @Disabled
     void d_delete(){
@@ -89,6 +92,7 @@ class InvoiceServiceImplTest {
         assertTrue(success);
         System.out.println("Deleted -> " + success);
     }
+
     @Test
     void getAll(){
         System.out.println("Get All:");

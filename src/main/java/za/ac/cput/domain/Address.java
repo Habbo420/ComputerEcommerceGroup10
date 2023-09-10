@@ -18,7 +18,7 @@ public class Address {
     public String postalCode;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "cityID", referencedColumnName = "cityID")
+    @JoinColumn(name = "cityID")
     public City city;
 
     @ManyToOne(cascade = CascadeType.ALL)

@@ -3,6 +3,7 @@ package za.ac.cput.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import za.ac.cput.domain.Invoice;
+import za.ac.cput.repository.EnquiryRepository;
 import za.ac.cput.repository.InvoiceRepository;
 import za.ac.cput.service.InvoiceService;
 
@@ -19,8 +20,12 @@ import java.util.Set;
 @Service
 public class InvoiceServiceImpl implements InvoiceService {
 
-    @Autowired
     private InvoiceRepository repository;
+
+    @Autowired
+    private InvoiceServiceImpl(InvoiceRepository repository){
+        this.repository = repository;
+    }
 
 
     @Override

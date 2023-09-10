@@ -16,18 +16,16 @@ import za.ac.cput.service.impl.StoreDetailsServiceImpl;
 import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
 class InvoiceControllerTest {
 
-
-    private static Country southAfrica = CountryFactory.createCountry(
+    private static final Country southAfrica = CountryFactory.createCountry(
             "South Africa"
     );
-    private static  City homeCity = CityFactory.createCity(
+    private static final City homeCity = CityFactory.createCity(
             "Cape Town",
             southAfrica
     );
-    private static  Address homeAddress = AddressFactory.buildAddress(
+    private static final Address homeAddress = AddressFactory.buildAddress(
             "53 Main Road",
             "6045",
             homeCity
@@ -45,10 +43,10 @@ class InvoiceControllerTest {
             customer
     );
     private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
-            "Evetech",
+            "CapConTech",
             homeAddress,
             "021 445 9912",
-            "techEve@gmail.com"
+            "CapConTech@gmail.com"
     );
 
     private static final Invoice invoice = InvoiceFactory.buildInvoice(
@@ -65,7 +63,6 @@ class InvoiceControllerTest {
 
     @Order(1)
     @Test
-    @Transactional
     void create() {
         String url = baseURL + "/create";
         ResponseEntity<Invoice> postResponse = restTemplate.postForEntity(url, invoice, Invoice.class);
@@ -80,7 +77,6 @@ class InvoiceControllerTest {
 
     @Order(2)
     @Test
-    @Transactional
     void read() {
         String url = baseURL + "/read/" + invoice.getInvoiceNumber();
         System.out.println("URL: " + url);
@@ -91,7 +87,6 @@ class InvoiceControllerTest {
 
     @Order(3)
     @Test
-    @Transactional
     void update() {
         Invoice updated = new Invoice.Builder().copy(invoice).setStoreDetails(storeDetails).build();
         String url = baseURL + "/update";
@@ -104,7 +99,6 @@ class InvoiceControllerTest {
     @Order(5)
     @Test
     @Disabled
-    @Transactional
     void delete() {
         String url = baseURL + "/delete/" + invoice.getInvoiceNumber();
         System.out.println("URL: " + url);

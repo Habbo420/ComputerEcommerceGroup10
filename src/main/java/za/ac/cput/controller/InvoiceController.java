@@ -35,5 +35,4 @@ public class InvoiceController {
     @GetMapping("/getAll")
     public List<Invoice> getAll(){return invoiceService.getAll();}
 
-
 }

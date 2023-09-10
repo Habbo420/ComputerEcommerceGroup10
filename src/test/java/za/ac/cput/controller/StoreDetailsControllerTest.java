@@ -22,14 +22,14 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StoreDetailsControllerTest {
 
-    private static Country southAfrica = CountryFactory.createCountry(
+    private static final Country southAfrica = CountryFactory.createCountry(
             "South Africa"
     );
-    private static City homeCity = CityFactory.createCity(
+    private static final City homeCity = CityFactory.createCity(
             "Cape Town",
             southAfrica
     );
-    private static Address homeAddress = AddressFactory.buildAddress(
+    private static final Address homeAddress = AddressFactory.buildAddress(
             "53 Main Road",
             "6045",
             homeCity
@@ -42,7 +42,6 @@ class StoreDetailsControllerTest {
             "021 445 9912",
             "techEve@gmail.com"
     );
-
 
     @Autowired
     private TestRestTemplate restTemplate;
