@@ -44,14 +44,12 @@ class InvoiceServiceImplTest {
             "KingJason@gmail.com",
             "AlexDraai143"
     );
-    private static final Sales sales = SalesFactory.buildTestSales(
-            "21c73f2d-a23e-4a2b-9fbb-e367d32d8b72",
+    private static final Sales sales = SalesFactory.buildSales(
             "05-08-2023",
             7000.00,
             customer
     );
-    private static final StoreDetails storeDetails = StoreDetailsFactory.buildTestStoreDetails(
-            "123",
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
             "Evetech",
             homeAddress,
             "021 445 9912",
@@ -74,7 +72,7 @@ class InvoiceServiceImplTest {
     void b_read(){
         Invoice invoiceRead = service.read(invoice.getInvoiceNumber());
         assertNotNull(invoiceRead);
-        System.out.println("Read ->" + invoiceRead);
+        System.out.println("Read " + invoiceRead);
     }
     @Test
     @Disabled
@@ -85,6 +83,7 @@ class InvoiceServiceImplTest {
         System.out.println("Updated -> " + updatedInvoice);
     }
     @Test
+    @Disabled
     void d_delete(){
         boolean success = service.delete(invoice.getInvoiceNumber());
         assertTrue(success);

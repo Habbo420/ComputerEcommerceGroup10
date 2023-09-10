@@ -61,7 +61,6 @@ class CountryControllerTest {
     @Order(3)
     //@Transactional
     @Test
-    //not working properly
     void update() {
         Country updated = new Country.Builder().copy(country)
                 .setCountryName("Finland")

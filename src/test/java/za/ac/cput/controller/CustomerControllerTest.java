@@ -23,11 +23,13 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CustomerControllerTest {
 
-    private static Customer customer = CustomerFactory.buildCustomer(
+    private static Customer customer = CustomerFactory.buildTestCustomer(
+            "e0295579-70a0-48f3-b0c8-3f3fbe66b6cc",
             "Luke",
             "Ben",
             "LW@gmail.com",
-            "wufh%2465");
+            "wufh%2465"
+    );
 
     @Autowired
     private TestRestTemplate restTemplate;

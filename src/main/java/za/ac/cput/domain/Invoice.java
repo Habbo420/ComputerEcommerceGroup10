@@ -14,24 +14,15 @@ public class Invoice implements Serializable {
     @Id
     public String invoiceNumber ;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "storeID")
     public StoreDetails storeDetails ;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "salesID")
     public Sales sales ;
-
-    // Constructors
     public Invoice(){}
 
-    public Invoice(String invoiceNumber, StoreDetails storeDetails, Sales sales) {
-        this.invoiceNumber = invoiceNumber;
-        this.storeDetails = storeDetails;
-        this.sales = sales;
-    }
-
-    // Getters
     public String getInvoiceNumber() {return invoiceNumber;}
     public StoreDetails getStoreDetails() {return storeDetails;}
     public Sales getSales() {return sales;}

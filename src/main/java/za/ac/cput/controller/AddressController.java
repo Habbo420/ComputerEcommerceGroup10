@@ -8,7 +8,7 @@ import za.ac.cput.service.AddressService;
 import java.util.List;
 
 @RestController
-@RequestMapping("/addressController")
+@RequestMapping("/address")
 public class AddressController {
 
     @Autowired

@@ -20,7 +20,7 @@ import java.util.Set;
 public class InvoiceServiceImpl implements InvoiceService {
 
     @Autowired
-    private InvoiceRepository repository; // Assuming you have an InvoiceRepository
+    private InvoiceRepository repository;
 
 
     @Override

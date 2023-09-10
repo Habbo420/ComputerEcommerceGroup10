@@ -18,18 +18,18 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class AddressControllerTest {
-private static final Country southAfrica = CountryFactory.createCountry(
-        "South Africa"
-);
-private static final City homeCity = CityFactory.createCity(
-        "Cape Town",
-                  southAfrica
-);
-private static final Address homeAddress = AddressFactory.buildAddress(
-            "53 Main Road",
-            "6045",
-            homeCity
+    private static final Country southAfrica = CountryFactory.createCountry(
+            "South Africa"
     );
+    private static final City homeCity = CityFactory.createCity(
+            "Cape Town",
+            southAfrica
+    );
+    private static final Address homeAddress = AddressFactory.buildAddress(
+                "53 Main Road",
+                "6045",
+                homeCity
+        );
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -48,14 +48,14 @@ private static final Address homeAddress = AddressFactory.buildAddress(
         Address savedAddress = postResponse.getBody();
         System.out.println("Saved data: " + savedAddress);
 
-        assertEquals(homeAddress.addressID, postResponse.getBody().addressID);
+        assertEquals(homeAddress.getAddressID(), postResponse.getBody().getAddressID());
     }
 
     @Order(2)
     @Test
     @Transactional
     void read() {
-        String url = baseURL + "/read/" + homeAddress.addressID;
+        String url = baseURL + "/read/" + homeAddress.getAddressID();
         System.out.println("URL: " + url);
         ResponseEntity<Address> response = restTemplate.getForEntity(url, Address.class);
         assertEquals(homeAddress.addressID, response.getBody().addressID);

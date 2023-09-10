@@ -47,18 +47,18 @@ public class SupplierOrder implements Serializable {
     public SupplierOrder(){
     }
 
-    private SupplierOrder(Builder b){
+    private SupplierOrder(Builder builder){
 
-        this.supplier = b.supplier;
-        this.products = b.products;
-        this.productQuantity = b.productQuantity;
-        this.productIndividualPrice = b.productIndividualPrice;
-        this.orderID = b.orderID;
-        this.dateOfOrder = b.dateOfOrder;
-        this.expectedDeliveryDate = b.expectedDeliveryDate;
-        this.actualDeliveryDate = b.actualDeliveryDate;
-        this.importTax = b.importTax;
-        this.totalCost = b.totalCost;
+        this.supplier = builder.supplier;
+        this.products = builder.products;
+        this.productQuantity = builder.productQuantity;
+        this.productIndividualPrice = builder.productIndividualPrice;
+        this.orderID = builder.orderID;
+        this.dateOfOrder = builder.dateOfOrder;
+        this.expectedDeliveryDate = builder.expectedDeliveryDate;
+        this.actualDeliveryDate = builder.actualDeliveryDate;
+        this.importTax = builder.importTax;
+        this.totalCost = builder.totalCost;
 
     }
 

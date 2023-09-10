@@ -30,7 +30,7 @@ public class CustomerController {
         return customerService.read(id);
     }
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public Customer update(@RequestBody Customer customer) {
         return customerService.update(customer);
     }

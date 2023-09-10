@@ -35,11 +35,14 @@ class StoreDetailsControllerTest {
             homeCity
     );
 
-    private static StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
-            "M computers",
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildTestStoreDetails(
+            "123",
+            "Evetech",
             homeAddress,
-            "0988422548",
-            "MComp@gmail.com");
+            "021 445 9912",
+            "techEve@gmail.com"
+    );
+
 
     @Autowired
     private TestRestTemplate restTemplate;

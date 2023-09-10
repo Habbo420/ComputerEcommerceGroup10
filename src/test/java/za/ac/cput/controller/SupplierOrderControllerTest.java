@@ -69,14 +69,7 @@ class SupplierOrderControllerTest {
     @Order(1)
     @Test
     void create() {
-        System.out.println("SupplierOrder: " + supplierOrder);
-        if (supplierOrder != null) {
-            System.out.println("Supplier: " + supplierOrder.getSupplier());
-            System.out.println("Products: " + supplierOrder.getProducts());
-        }
         String url = baseURL + "/create";
-        //SupplierOrder so = SupplierOrderFactory.buildSupplierOrder("06-01-2022", "12-01-2022", "11-01-2022",
-          //      120.00, 12120.00, 2, 6000.00, product, supplier);
         ResponseEntity<SupplierOrder> postResponse = restTemplate.postForEntity(url, supplierOrder, SupplierOrder.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());

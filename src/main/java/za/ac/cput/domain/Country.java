@@ -18,17 +18,6 @@ public class Country implements Serializable {
     public String countryID;
     @Column
     public String countryName;
-/*
-    @OneToMany(
-            mappedBy = "country",
-            cascade = CascadeType.ALL
-    )
-    public List<City> cityList;
-
- */
-
-
-
 
     public Country(){}
 

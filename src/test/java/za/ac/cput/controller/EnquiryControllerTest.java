@@ -19,7 +19,7 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class EnquiryControllerTest {
-    private Customer customer = CustomerFactory.buildTestCustomer(
+    private static final Customer customer = CustomerFactory.buildTestCustomer(
             "e0295579-70a0-48f3-b0c8-3f3fbe66b6cc",
             "Luke",
             "Ben",
@@ -27,7 +27,7 @@ class EnquiryControllerTest {
             "wufh%2465"
     );
 
-    private Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product");
+    private static final Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product");
 
     @Autowired
     private TestRestTemplate restTemplate;

@@ -27,7 +27,7 @@ public class SupplierOrderController {
     @GetMapping("/read/{id}")
     public SupplierOrder read(@PathVariable String id){return supplierOrderService.read(id);}
 
-    @PutMapping("/update/{id}")
+    @PutMapping("/update")
     public SupplierOrder update(@RequestBody SupplierOrder supplierOrder){
         return supplierOrderService.update(supplierOrder);
     }

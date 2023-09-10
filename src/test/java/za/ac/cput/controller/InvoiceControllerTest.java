@@ -11,6 +11,7 @@ import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.*;
+import za.ac.cput.service.impl.StoreDetailsServiceImpl;
 
 import static org.junit.jupiter.api.Assertions.*;
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
@@ -18,32 +19,32 @@ import static org.junit.jupiter.api.Assertions.*;
 @Transactional
 class InvoiceControllerTest {
 
+
     private static Country southAfrica = CountryFactory.createCountry(
             "South Africa"
     );
-    private static City homeCity = CityFactory.createCity(
+    private static  City homeCity = CityFactory.createCity(
             "Cape Town",
             southAfrica
     );
-    private static Address homeAddress = AddressFactory.buildAddress(
+    private static  Address homeAddress = AddressFactory.buildAddress(
             "53 Main Road",
             "6045",
             homeCity
     );
 
-
-    private static final Customer customer_one = CustomerFactory.buildCustomer(
+    private static final Customer customer = CustomerFactory.buildCustomer(
             "Jason",
             "King",
             "KingJason@gmail.com",
             "AlexDraai143"
     );
-    private static final Sales sales_one = SalesFactory.buildSales(
+    private static final Sales sales = SalesFactory.buildSales(
             "05-08-2023",
             7000.00,
-            customer_one
+            customer
     );
-    private static final StoreDetails storeDetails_one = StoreDetailsFactory.buildStoreDetails(
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
             "Evetech",
             homeAddress,
             "021 445 9912",
@@ -51,12 +52,14 @@ class InvoiceControllerTest {
     );
 
     private static final Invoice invoice = InvoiceFactory.buildInvoice(
-            storeDetails_one,
-            sales_one
+            storeDetails,
+            sales
     );
 
     @Autowired
     private TestRestTemplate restTemplate;
+
+
     private final String baseURL = "http://localhost:8080/invoice" ;
 
 
@@ -90,7 +93,7 @@ class InvoiceControllerTest {
     @Test
     @Transactional
     void update() {
-        Invoice updated = new Invoice.Builder().copy(invoice).setStoreDetails(storeDetails_one).build();
+        Invoice updated = new Invoice.Builder().copy(invoice).setStoreDetails(storeDetails).build();
         String url = baseURL + "/update";
         System.out.println("URL: " + url);
         System.out.println("Post data: " + updated);
@@ -117,7 +120,7 @@ class InvoiceControllerTest {
         HttpEntity<String> entity = new HttpEntity<>(null, headers);
         ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
         System.out.println("Show ALL:");
-        System.out.println(response);
+        //System.out.println(response);
         System.out.println(response.getBody());
     }
 
