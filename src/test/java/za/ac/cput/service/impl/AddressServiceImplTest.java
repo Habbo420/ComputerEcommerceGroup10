@@ -2,6 +2,7 @@ package za.ac.cput.service.impl;
 
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.MethodOrderer;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestMethodOrder;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +19,7 @@ import za.ac.cput.repository.AddressRepository;
 import za.ac.cput.service.AddressService;
 
 import static org.junit.jupiter.api.Assertions.*;
-@TestMethodOrder(MethodOrderer.MethodName.class)
+@TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest
 @Transactional
 class AddressServiceImplTest {
@@ -41,6 +42,7 @@ class AddressServiceImplTest {
     );
 
     @Test
+    @Order(1)
     void create() {
         Address created = addressRepository.save(homeAddress);
         assertEquals(homeAddress.getAddressID(), created.addressID);
@@ -48,6 +50,7 @@ class AddressServiceImplTest {
     }
 
     @Test
+    @Order(2)
     void read() {
         Address read = addressService.read(homeAddress.addressID);
         assertNotNull(read);
@@ -55,6 +58,7 @@ class AddressServiceImplTest {
     }
 
     @Test
+    @Order(3)
     void update() {
         Address homeAddress = AddressFactory.buildAddress(
                 "53 Main Road",
@@ -70,6 +74,7 @@ class AddressServiceImplTest {
     }
 
     @Test
+    @Order(5)
     void delete() {
         boolean delete = addressService.delete(homeAddress.getAddressID());
         assertTrue(delete);
@@ -77,6 +82,7 @@ class AddressServiceImplTest {
     }
 
     @Test
+    @Order(4)
     void getAll() {
         System.out.println("Show All");
         System.out.println(addressService.getAll());

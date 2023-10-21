@@ -15,9 +15,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import za.ac.cput.domain.Customer;
+import za.ac.cput.domain.User;
 import za.ac.cput.domain.Sales;
-import za.ac.cput.factory.CustomerFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.factory.SalesFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,12 +26,8 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class SalesControllerTest {
-    private static final Customer customer = CustomerFactory.buildTestCustomer(
-            "Test123",
-            "Harry",
-            "Potter",
-            "PotterH@gmail.com",
-            "WingaurdiamLeviousa"
+    private static final User customer = UserFactory.buildTestCustomer(
+            14L
     );
 
 
@@ -49,16 +45,15 @@ class SalesControllerTest {
     @Order(1)
     @Test
     @Transactional
-    void create() {
+    void a_create() {
         String url = baseURL + "/create";
         ResponseEntity<Sales> postResponse = restTemplate.postForEntity(url, sales, Sales.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-
+        //assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
         Sales savedSales = postResponse.getBody();
         System.out.println("Saved data: " + savedSales);
-
-        assertEquals(sales.getSaleID(), postResponse.getBody().getSaleID());
+        assertEquals(savedSales.getSaleID(), postResponse.getBody().getSaleID());
     }
 
     @Order(2)

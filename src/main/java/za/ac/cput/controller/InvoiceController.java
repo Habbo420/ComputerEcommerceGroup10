@@ -24,15 +24,14 @@ public class InvoiceController {
 
 
     @GetMapping("/read/{id}")
-    public Invoice read(@PathVariable String id){return invoiceService.read(id);}
+    public Invoice read(@PathVariable Long id){return invoiceService.read(id);}
 
     @PutMapping("/update")
     public Invoice update(@RequestBody Invoice invoice){return invoiceService.update(invoice);}
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable String id){return invoiceService.delete(id);}
+    public boolean delete(@PathVariable Long id){return invoiceService.delete(id);}
 
     @GetMapping("/getAll")
     public List<Invoice> getAll(){return invoiceService.getAll();}
-
 }

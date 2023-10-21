@@ -15,7 +15,7 @@ public class InvoiceFactory {
 
         String InvoiceNumber = Helper.generateInvoiceNumber();
 
-        return new Invoice.Builder().setInvoiceNumber(InvoiceNumber)
+        return new Invoice.Builder()
                                     .setStoreDetails(storeDetails)
                                     .setSales(sales)
                                     .build();

@@ -23,7 +23,7 @@ public class SalesItemServiceImpl implements SalesItemService {
     }
 
     @Override
-    public SalesItem read(String id) {
+    public SalesItem read(Long id) {
         return this.repository.findById(id).orElse(null);
     }
 
@@ -35,7 +35,7 @@ public class SalesItemServiceImpl implements SalesItemService {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
         if(this.repository.existsById(id)){
             this.repository.deleteById(id);
             return true;
@@ -46,5 +46,10 @@ public class SalesItemServiceImpl implements SalesItemService {
     @Override
     public List<SalesItem> getAll() {
         return this.repository.findAll();
+    }
+
+    @Override
+    public List<SalesItem> findBySales_SaleID(Long salesId) {
+        return repository.findBySales_SaleID(salesId);
     }
 }

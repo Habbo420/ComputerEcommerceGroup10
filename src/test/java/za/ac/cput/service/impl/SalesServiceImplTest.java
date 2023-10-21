@@ -6,7 +6,6 @@ Author: David Henriques Garrancho (221475982)
 Date: 16 August 2023
 */
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,12 +24,8 @@ class SalesServiceImplTest {
     @Autowired
     private SalesRepository repository;
 
-    private static final Customer customer = CustomerFactory.buildTestCustomer(
-            "Test123",
-            "Luke",
-            "Ben",
-            "LW@gmail.com",
-            "wufh%2465"
+    private static final User customer = UserFactory.buildTestCustomer(
+        2L
     );
 
 

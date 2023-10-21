@@ -27,7 +27,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public Product read(String productID) {
+    public Product read(Long productID) {
         return this.repository.findById(productID).orElse(null);
     }
 
@@ -39,7 +39,7 @@ public class ProductServiceImpl implements ProductService{
     }
 
     @Override
-    public boolean delete(String productID) {
+    public boolean delete(Long productID) {
         if(this.repository.existsById(productID)){
             this.repository.deleteById(productID);
             return true;

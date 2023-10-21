@@ -1,5 +1,6 @@
 package za.ac.cput.controller;
 
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -22,25 +23,15 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class StoreDetailsControllerTest {
 
-    private static final Country southAfrica = CountryFactory.createCountry(
-            "South Africa"
-    );
-    private static final City homeCity = CityFactory.createCity(
-            "Cape Town",
-            southAfrica
-    );
-    private static final Address homeAddress = AddressFactory.buildAddress(
-            "53 Main Road",
-            "6045",
-            homeCity
+    private static final Address homeAddress = AddressFactory.buildTestAddress(
+            4L
     );
 
-    private static final StoreDetails storeDetails = StoreDetailsFactory.buildTestStoreDetails(
-            "123",
-            "Evetech",
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
+            "ExtraTecha",
             homeAddress,
-            "021 445 9912",
-            "techEve@gmail.com"
+            "066 224 9965",
+            "ExtraTecha@gmail.com"
     );
 
     @Autowired
@@ -50,6 +41,7 @@ class StoreDetailsControllerTest {
 
     @Test
     @Order(1)
+    @Transactional
     void create() {
         String url = baseURL + "/create";
         ResponseEntity<StoreDetails> postResponse = restTemplate.postForEntity(url, storeDetails, StoreDetails.class);
@@ -62,6 +54,7 @@ class StoreDetailsControllerTest {
 
     @Test
     @Order(2)
+    @Transactional
     void read() {
         String url = baseURL + "/read/" + storeDetails.getStoreID();
         System.out.println("URL: " + url);
@@ -72,6 +65,7 @@ class StoreDetailsControllerTest {
 
     @Test
     @Order(3)
+    @Transactional
     void update() {
         StoreDetails updated = new StoreDetails.Builder().copy(storeDetails)
                 .setStoreName("N Computers")
@@ -85,6 +79,7 @@ class StoreDetailsControllerTest {
 
     @Test
     @Order(4)
+    @Transactional
     @Disabled
     void delete() {
         String url = baseURL + "/delete/" + storeDetails.getStoreID();
@@ -94,6 +89,7 @@ class StoreDetailsControllerTest {
 
     @Test
     @Order(5)
+    @Transactional
     void getAll() {
         String url = baseURL + "/getAll";
         HttpHeaders headers = new HttpHeaders();

@@ -23,16 +23,16 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @TestMethodOrder(MethodOrderer.OrderAnnotation.class)
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
-@Transactional
 class CityControllerTest {
 
+    private static Country southAfrica = CountryFactory.createTestCountry(
+            1L
+    );
 
-    //find out how to call value from database if there is one (Country)
-    //Changing values for countryName work
-    //Values that are repeated, cause issues with read, and timeout issues with getAll method
-    private static final Country country= CountryFactory.createCountry("Pakistan");
-
-    private static final City city = CityFactory.createCity("Cape Town",country);
+    private static  City city = CityFactory.createCity(
+            "Port Elizabeth",
+            southAfrica
+    );
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -40,22 +40,20 @@ class CityControllerTest {
     private final String baseURL = "http://localhost:8080/city";
 
     @Order(1)
-    @Transactional
     @Test
-    void create() {
+    void a_create() {
         String url = baseURL + "/create";
-        ResponseEntity<City> postResponse = restTemplate.postForEntity(url,city, City.class);
+        ResponseEntity<City> postResponse = restTemplate.postForEntity(url, city, City.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-
+        //assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
         City savedCity = postResponse.getBody();
         System.out.println("Saved data: " + savedCity);
-
-        assertEquals(city.getCityID(),postResponse.getBody().getCityID());
+        assertEquals(savedCity.getCityID(), postResponse.getBody().getCityID());
     }
 
+
     @Order(2)
-    @Transactional
     @Test
     void read() {
         String url = baseURL + "/read/" + city.getCityID();
@@ -66,7 +64,6 @@ class CityControllerTest {
     }
 
     @Order(3)
-    @Transactional
     @Test
     //update doesnt work properly
     void update() {
@@ -80,7 +77,6 @@ class CityControllerTest {
     }
 
     @Order(5)
-    @Transactional
     @Test
     @Disabled
     void delete() {
@@ -90,7 +86,6 @@ class CityControllerTest {
     }
 
     @Order(4)
-    @Transactional
     @Test
     void getAll() {
         String url = baseURL+ "/getAll";

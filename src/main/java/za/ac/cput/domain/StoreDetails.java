@@ -9,11 +9,12 @@ import java.util.Objects;
 @Entity
 public class StoreDetails implements Serializable {
     @Id
-    private String storeID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // or other strategy
+    private Long storeID;
     private String storeName;
     private String storeTel;
     private String storeEmail;
-    @ManyToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinTable(
             name = "store_address",
             joinColumns = @JoinColumn(name = "store_id"),
@@ -24,7 +25,7 @@ public class StoreDetails implements Serializable {
     public StoreDetails() {
     }
 
-    public String getStoreID() {
+    public Long getStoreID() {
         return storeID;
     }
 
@@ -76,13 +77,13 @@ public class StoreDetails implements Serializable {
         this.storeEmail = b.storeEmail;
     }
     public static class Builder {
-        private String storeID;
+        private Long storeID;
         private String storeName;
         private Address address;
         private String storeTel;
         private String storeEmail;
 
-        public Builder setStoreID(String storeID){
+        public Builder setStoreID(Long storeID){
             this.storeID = storeID;
             return this;
         }

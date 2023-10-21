@@ -24,13 +24,13 @@ public class CountryController {
     public Country create(@RequestBody Country country){return countryService.create(country);}
 
     @GetMapping("/read/{id}")
-    public Country read(@PathVariable String id){return countryService.read(id);}
+    public Country read(@PathVariable Long id){return countryService.read(id);}
 
     @PostMapping("/update")
     public Country update(@RequestBody Country country){return countryService.update(country);}
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable String id){return countryService.delete(id);}
+    public boolean delete(@PathVariable Long id){return countryService.delete(id);}
 
     @GetMapping("/getAll")
     public List<Country> getAll(){return countryService.getAll();}

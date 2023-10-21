@@ -11,6 +11,6 @@ import za.ac.cput.domain.Country;
 import java.util.List;
 
 
-public interface CountryService extends IService<Country, String>{
+public interface CountryService extends IService<Country, Long>{
     List<Country> getAll();
 }

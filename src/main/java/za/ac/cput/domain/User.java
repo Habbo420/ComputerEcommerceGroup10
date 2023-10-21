@@ -7,24 +7,63 @@ Date: 20 March 2023
 */
 
 import jakarta.persistence.*;
+import lombok.AccessLevel;
+import lombok.Setter;
+import lombok.experimental.FieldDefaults;
+import org.hibernate.annotations.FetchMode;
+import org.hibernate.annotations.Fetch;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import java.io.Serializable;
-import java.util.Objects;
+import java.util.*;
 
 
 @Entity
-public class Customer implements Serializable {
+@Setter
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@JsonIgnoreProperties({"hibernateLazyInitializer"})
+public class User implements Serializable , UserDetails {
 
     @Id
-    public String customerID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // or other strategy
+    private Long customerID;
     private String firstName;
     private String lastName;
+    @Column(unique = true)
     private String email;
     private String password;
 
-    public Customer(){
+    @ManyToMany(fetch = FetchType.EAGER  , cascade = CascadeType.PERSIST)
+    List<Role> roles ;
+
+
+    public User(String email , String password , List<Role> roles) {
+        this.email= email ;
+        this.password=password ;
+        this.roles=roles ;}
+
+
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        this.roles.forEach(role -> authorities.add(new SimpleGrantedAuthority(role.getRoleName())));
+        return authorities;
     }
 
-    private Customer(Builder b){
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(
+            name = "user_roles",
+            joinColumns = @JoinColumn(name = "user_customerid"),
+            inverseJoinColumns = @JoinColumn(name = "roles_id")
+    )
+    private Set<Role> role = new HashSet<>();
+
+    public User(){
+    }
+
+    private User(Builder b){
         this.customerID = b.customerID;
         this.firstName = b.firstName;
         this.lastName = b.lastName;
@@ -32,9 +71,7 @@ public class Customer implements Serializable {
         this.password = b.password;
     }
 
-    public String getCustomerID() {
-        return customerID;
-    }
+    public Long getCustomerID() {return customerID;}
 
     public String getFirstName() {
         return firstName;
@@ -53,10 +90,39 @@ public class Customer implements Serializable {
     }
 
     @Override
+    public String getUsername() {
+        return this.email;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
+
+    public Set<Role> getRole() {
+        return role;
+    }
+
+    @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Customer customer = (Customer) o;
+        User customer = (User) o;
         return Objects.equals(customerID, customer.customerID) && Objects.equals(firstName, customer.firstName) && Objects.equals(lastName, customer.lastName) && Objects.equals(email, customer.email) && Objects.equals(password, customer.password);
     }
 
@@ -77,13 +143,13 @@ public class Customer implements Serializable {
     }
 
     public static class Builder {
-        public String customerID;
+        public Long customerID;
         private String firstName;
         private String lastName;
         private String email;
         private String password;
 
-        public Builder setCustomerID(String customerID){
+        public Builder setCustomerID(Long customerID){
             this.customerID = customerID;
             return this;
         }
@@ -108,7 +174,7 @@ public class Customer implements Serializable {
             return this;
         }
 
-        public Builder copy(Customer customer){
+        public Builder copy(User customer){
             this.customerID = customer.customerID;
             this.firstName = customer.firstName;
             this.lastName = customer.lastName;
@@ -117,8 +183,8 @@ public class Customer implements Serializable {
             return this;
         }
 
-        public Customer build(){
-            return new Customer(this);
+        public User build(){
+            return new User(this);
         }
     }
 }

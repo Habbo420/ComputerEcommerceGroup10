@@ -11,6 +11,7 @@ import java.util.List;
     Date: 10 - 06 - 2023
  */
 
-public interface InvoiceService extends IService <Invoice, String>{
+public interface InvoiceService extends IService <Invoice, Long>{
     List<Invoice> getAll();
+
 }

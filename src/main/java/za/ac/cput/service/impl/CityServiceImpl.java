@@ -24,7 +24,7 @@ public class CityServiceImpl implements CityService {
     public City create(City city){return this.repository.save(city);}
 
     @Override
-    public City read(String cityID){return this.repository.findById(cityID).orElse(null);}
+    public City read(Long cityID){return this.repository.findById(cityID).orElse(null);}
 
     @Override
     public City update(City city){
@@ -36,7 +36,7 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public boolean delete(String cityID){
+    public boolean delete(Long cityID){
         if (this.repository.existsById(cityID)){
             this.repository.deleteById(cityID);
             return true;

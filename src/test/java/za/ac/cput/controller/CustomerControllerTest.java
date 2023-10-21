@@ -14,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.*;
-import za.ac.cput.domain.Customer;
-import za.ac.cput.factory.CustomerFactory;
+import za.ac.cput.domain.User;
+import za.ac.cput.factory.UserFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -23,53 +23,59 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 class CustomerControllerTest {
 
-    private static Customer customer = CustomerFactory.buildTestCustomer(
-            "e0295579-70a0-48f3-b0c8-3f3fbe66b6cc",
-            "Luke",
-            "Ben",
-            "LW@gmail.com",
-            "wufh%2465"
+    private static final User customer = UserFactory.buildCustomer(
+            "David",
+            "Garrancho",
+            "DavidG@gmail.com",
+            "Hol'emup"
     );
 
     @Autowired
     private TestRestTemplate restTemplate;
 
-    private final String baseURL = "http://localhost:8080/customer";
+    private final String baseURL = "http://localhost:8080/user";
 
     @Test
     void a_create() {
-        String url = baseURL + "/create";
-        ResponseEntity<Customer> postResponse = restTemplate.postForEntity(url, customer, Customer.class);
+        String url = baseURL + "/register";
+        ResponseEntity<User> postResponse = restTemplate.postForEntity(url, customer, User.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-        //assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
-        Customer savedCustomer = postResponse.getBody();
+        User savedCustomer = postResponse.getBody();
         System.out.println("Saved data: " + savedCustomer);
-        assertEquals(customer.getCustomerID(), postResponse.getBody().getCustomerID());
+        assertEquals(savedCustomer.getCustomerID(), postResponse.getBody().getCustomerID());
     }
 
     @Test
     void b_read() {
-        String url = baseURL + "/read/" + customer.getCustomerID();
+        String url = baseURL + "/read/" + 4L;
         System.out.println("URL: " + url);
-        ResponseEntity<Customer> response = restTemplate.getForEntity(url, Customer.class);
+        ResponseEntity<User> response = restTemplate.getForEntity(url, User.class);
         assertEquals(customer.getCustomerID(), response.getBody().getCustomerID());
         System.out.println(response.getBody());
     }
     @Test
     void c_update() {
-        Customer updated = new Customer.Builder().copy(customer).setFirstName("Ethan Andrew").build();
+        User updated = new User.Builder()
+                .copy(customer)
+                .setFirstName("David")
+                .setLastName("Smith")
+                .setEmail("david@example.com")
+                .build();
+
         String url = baseURL + "/update";
         System.out.println("URL: " + url);
         System.out.println("Post data: " + updated);
-        ResponseEntity<Customer> response = restTemplate.postForEntity(url, updated, Customer.class);
+
+        ResponseEntity<User> response = restTemplate.postForEntity(url, updated, User.class);
         assertNotNull(response.getBody());
     }
+
 
     @Test
     @Disabled
     void e_delete() {
-        String url = baseURL + "/delete/" + customer.getCustomerID();
+        String url = baseURL + "/delete/" + 3L;
         System.out.println("URL: " + url);
         restTemplate.delete(url);
     }

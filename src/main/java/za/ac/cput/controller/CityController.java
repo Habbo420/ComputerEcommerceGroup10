@@ -23,13 +23,13 @@ public class CityController {
     public City create(@RequestBody City city){return cityService.create(city);}
 
     @GetMapping("/read/{id}")
-    public City read(@PathVariable String id){return cityService.read(id);}
+    public City read(@PathVariable Long id){return cityService.read(id);}
 
     @PostMapping("/update")
     public City update(@RequestBody City city){return cityService.update(city);}
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable String id){return cityService.delete(id);}
+    public boolean delete(@PathVariable Long id){return cityService.delete(id);}
 
     @GetMapping("/getAll")
     public List<City> getAll(){return cityService.getAll();}

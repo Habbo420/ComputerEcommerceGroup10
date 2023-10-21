@@ -19,7 +19,7 @@ public class SalesItemController {
     }
 
     @GetMapping("/read/{id}")
-    public SalesItem read(@PathVariable String id) {
+    public SalesItem read(@PathVariable Long id) {
         return salesItemService.read(id);
     }
 
@@ -29,13 +29,18 @@ public class SalesItemController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public boolean delete(@PathVariable String id) {
+    public boolean delete(@PathVariable Long id) {
         return salesItemService.delete(id);
     }
 
     @GetMapping("/getAll")
     public List<SalesItem> getAll() {
         return salesItemService.getAll();
+    }
+
+    @GetMapping("/findBySalesId/{salesId}")
+    public List<SalesItem> findBySalesId(@PathVariable Long salesId) {
+        return salesItemService.findBySales_SaleID(salesId);
     }
 }
 

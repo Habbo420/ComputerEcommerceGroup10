@@ -12,18 +12,19 @@ Date: 04 - 04 - 2023
 @Entity
 public class Invoice implements Serializable {
     @Id
-    public String invoiceNumber ;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // or other strategy
+    public Long invoiceNumber;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "storeID")
-    public StoreDetails storeDetails ;
+    public StoreDetails storeDetails;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "salesID")
-    public Sales sales ;
+    public Sales sales;
     public Invoice(){}
 
-    public String getInvoiceNumber() {return invoiceNumber;}
+    public Long getInvoiceNumber() {return invoiceNumber;}
     public StoreDetails getStoreDetails() {return storeDetails;}
     public Sales getSales() {return sales;}
 
@@ -54,11 +55,11 @@ public class Invoice implements Serializable {
     }
 
     public static class Builder {
-        public String invoiceNumber ;
+        public Long invoiceNumber ;
         public StoreDetails storeDetails ;
         public Sales sales ;
 
-        public Builder setInvoiceNumber(String invoiceNumber){
+        public Builder setInvoiceNumber(Long invoiceNumber){
             this.invoiceNumber = invoiceNumber;
             return this;
         }

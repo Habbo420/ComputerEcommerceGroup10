@@ -34,7 +34,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public Invoice read(String id) {
+    public Invoice read(Long id) {
         return repository.findById(id).orElse(null);
     }
 
@@ -44,7 +44,7 @@ public class InvoiceServiceImpl implements InvoiceService {
     }
 
     @Override
-    public boolean delete(String id) {
+    public boolean delete(Long id) {
         if (this.repository.existsById(id)){
             this.repository.deleteById(id);
             return  true;

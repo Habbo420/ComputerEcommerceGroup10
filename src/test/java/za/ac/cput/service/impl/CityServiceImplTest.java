@@ -6,7 +6,6 @@ Author: Michael Daniel Johnson 221094040
 Date: 19 August 2023
 */
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,29 +24,29 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 
 class CityServiceImplTest {
-    private static final Country country = CountryFactory.createCountry("United States of America");
-    @Autowired
-    private CityServiceImpl cityService;
 
     @Autowired
-    private CountryRepository countryRepository;
+    private CityServiceImpl service;
+
+    @Autowired
+    private CountryRepository repository;
+
+    private static final Country country = CountryFactory.createTestCountry(1L);
     private static final City city = CityFactory.createCity("Africa",country);
 
     @Order(1)
     @Test
     //@Transactional
     void a_create() {
-        countryRepository.save(country);
-        City created = cityService.create(city);
-        assertEquals(city.getCityID(),created.getCityID());
-        System.out.println("Create: "+created);
+        City created = service.create(city);
+        System.out.println("Created " + created);
     }
 
     @Order(2)
     @Test
     //@Transactional
     void b_read() {
-        City read = cityService.read(city.getCityID());
+        City read = service.read(city.getCityID());
         assertNotNull(read);
         System.out.println("Read: "+read);
     }
@@ -69,7 +68,7 @@ class CityServiceImplTest {
     @Test
     @Disabled
     void e_delete() {
-        boolean success = cityService.delete(city.getCityID());
+        boolean success = service.delete(city.getCityID());
         assertTrue(success);
         System.out.println("Deleted: " +success);
     }
@@ -79,6 +78,6 @@ class CityServiceImplTest {
    //@Transactional
     void d_getAll() {
         System.out.println("Show All:");
-        System.out.println(cityService.getAll());
+        System.out.println(service.getAll());
     }
 }

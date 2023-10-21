@@ -18,14 +18,16 @@ public class AddressFactory {
              Helper.isNullOrEmpty(postalCode)){
              return null ;
         }
-        String AddressID = Helper.generateID();
 
-        return new Address.Builder().setAddressID(AddressID)
-                                    .setStreetAddress(streetAddress)
+        return new Address.Builder().setStreetAddress(streetAddress)
                                     .setPostalCode(postalCode)
                                     .setCity(city)
                                     .build();
     } // End of Address - buildAddress
 
+    public static Address buildTestAddress(Long id){
 
+        return new Address.Builder().setAddressID(id)
+                .build();
+    }
 }

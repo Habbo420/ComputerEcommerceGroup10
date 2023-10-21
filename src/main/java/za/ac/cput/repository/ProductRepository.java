@@ -11,6 +11,6 @@ import za.ac.cput.domain.Product;
 import java.util.Set;
 
 @Repository
-public interface ProductRepository extends JpaRepository<Product, String> {
+public interface ProductRepository extends JpaRepository<Product, Long> {
 
 }

@@ -9,6 +9,6 @@ import za.ac.cput.domain.Product;
 import java.util.List;
 import java.util.Set;
 
-public interface ProductService extends IService<Product, String>{
+public interface ProductService extends IService<Product, Long>{
     List<Product> getAll();
 }

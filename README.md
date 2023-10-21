@@ -1,1 +1,1 @@
-![Computer Ecommerce](https://github.com/David-Garrancho/ComputerEcommerceGroup10/assets/126564115/22e7def6-d5ad-4dd0-8d25-00894e68efb0)
+![Computer Ecommerce](https://github.com/David-Garrancho/ComputerEcommerceGroup10/assets/126564115/93a94493-59d4-4a8c-bb5a-9efc6e9947bc)

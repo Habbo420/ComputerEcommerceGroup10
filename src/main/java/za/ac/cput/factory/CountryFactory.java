@@ -15,9 +15,14 @@ public class CountryFactory {
         if (Helper.isNullOrEmpty(countryName)) {
             return null;
         }
-        String countryID = Helper.generateID();
+
         return new Country.Builder().setCountryName(countryName)
-                .setCountryID(countryID)
+                .build();
+    }
+
+    public static Country createTestCountry(Long id) {
+
+        return new Country.Builder().setCountryID(id)
                 .build();
     }
 }

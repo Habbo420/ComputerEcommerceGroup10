@@ -1,25 +1,25 @@
 package za.ac.cput.domain;
 
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Objects;
-import java.util.stream.Collectors;
 
 @Entity
+@Setter
 public class Review implements Serializable {
 
     @Id
-    public String reviewID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // or other strategy
+    public Long reviewID;
 
     private int rating;
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
-    private Customer customer;
+    private User customer;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "productID")
     private Product product;
 
@@ -34,11 +34,11 @@ public class Review implements Serializable {
     }
 
 
-    public String getReviewID() {
+    public Long getReviewID() {
         return reviewID;
     }
 
-    public Customer getCustomer() {
+    public User getCustomer() {
         return customer;
     }
 
@@ -76,13 +76,13 @@ public class Review implements Serializable {
     }
 
     public static class Builder {
-        public String reviewID;
+        public Long reviewID;
         private int rating;
-        private Customer customer;
+        private User customer;
         private Product product;
 
 
-        public Builder setReviewID(String reviewID){
+        public Builder setReviewID(Long reviewID){
             this.reviewID = reviewID;
             return this;
         }
@@ -92,7 +92,7 @@ public class Review implements Serializable {
             return this;
         }
 
-        public Builder setCustomer(Customer customer){
+        public Builder setCustomer(User customer){
             this.customer = customer;
             return this;
         }

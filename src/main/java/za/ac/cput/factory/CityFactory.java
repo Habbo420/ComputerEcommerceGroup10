@@ -17,11 +17,17 @@ public class CityFactory {
         if (Helper.isNullOrEmpty(cityName)) {
             return null;
         }
-        String ID = Helper.generateID();
 
-        return new City.Builder().setCityID(ID)
+        return new City.Builder()
                 .setCityName(cityName)
                 .setCountry(country)
+                .build();
+
+    }
+
+    public static City createTestCity(Long id) {
+
+        return new City.Builder().setCityID(id)
                 .build();
 
     }

@@ -1,14 +1,10 @@
 package za.ac.cput.service.impl;
 
-import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import za.ac.cput.domain.*;
 import za.ac.cput.factory.*;
-
-import java.util.Arrays;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -20,10 +16,8 @@ public class ReviewServiceImplTest {
     @Autowired
     private ReviewServiceImpl service;
 
-    private static final Product product = ProductFactory.buildProduct("FX 3060", "Item", "Next Generation gaming with the RTX 3060 TI", 3000.00);
-
-    private static final Customer customer = CustomerFactory.buildTestCustomer(
-            "Test2456",
+    private static final Product product = ProductFactory.buildProduct("FX 950", "Item", "Next Generation gaming with the RTX 950", 4000.00, 3500.00,true);
+    private static final User customer = UserFactory.buildCustomer(
             "Luke",
             "Ben",
             "LW@gmail.com",

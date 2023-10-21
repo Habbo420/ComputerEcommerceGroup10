@@ -3,28 +3,33 @@ package za.ac.cput.domain;
 Author: Hanno Visser Immelman 221074414
 */
 import jakarta.persistence.*;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.util.Objects;
 
 @Entity
+@Setter
 public class Enquiry implements Serializable {
 
     @Id
-    private String enquiryID;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // or other strategy
+    private Long enquiryID;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JoinColumn(name = "customerID")
-    private Customer customer;
+    private User customer;
 
     private String enquiryName;
     private String enquirySubjectLine;
+    @Column(columnDefinition = "LONGTEXT")
     private String enquiryBodyContent;
+    private String enquiryDate;
 
     public Enquiry() {
     }
 
-    public String getEnquiryID() {
+    public Long getEnquiryID() {
         return enquiryID;
     }
 
@@ -40,7 +45,11 @@ public class Enquiry implements Serializable {
         return enquiryBodyContent;
     }
 
-    public Customer getCustomer() {
+    public String getEnquiryDate() {
+        return enquiryDate;
+    }
+
+    public User getCustomer() {
         return customer;
     }
 
@@ -49,22 +58,24 @@ public class Enquiry implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Enquiry enquiry = (Enquiry) o;
-        return Objects.equals(enquiryID, enquiry.enquiryID) && Objects.equals(customer, enquiry.customer) && Objects.equals(enquiryName, enquiry.enquiryName) && Objects.equals(enquirySubjectLine, enquiry.enquirySubjectLine) && Objects.equals(enquiryBodyContent, enquiry.enquiryBodyContent);
+        return Objects.equals(enquiryID, enquiry.enquiryID) && Objects.equals(customer, enquiry.customer) && Objects.equals(enquiryName, enquiry.enquiryName) && Objects.equals(enquirySubjectLine, enquiry.enquirySubjectLine) && Objects.equals(enquiryBodyContent, enquiry.enquiryBodyContent) && Objects.equals(enquiryDate, enquiry.enquiryDate);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(enquiryID, customer, enquiryName, enquirySubjectLine, enquiryBodyContent);
+        return Objects.hash(enquiryID, customer, enquiryName, enquirySubjectLine, enquiryBodyContent, enquiryDate);
     }
 
     @Override
-    public String toString() {
+    public String
+    toString() {
         return "Enquiry{" +
-                "enquiryID='" + enquiryID + '\'' +
+                "enquiryID=" + enquiryID +
                 ", customer=" + customer +
                 ", enquiryName='" + enquiryName + '\'' +
                 ", enquirySubjectLine='" + enquirySubjectLine + '\'' +
                 ", enquiryBodyContent='" + enquiryBodyContent + '\'' +
+                ", enquiryDate='" + enquiryDate + '\'' +
                 '}';
     }
 
@@ -74,21 +85,23 @@ public class Enquiry implements Serializable {
         this.enquiryName = b.enquiryName;
         this.enquirySubjectLine = b.enquirySubjectLine;
         this.enquiryBodyContent = b.enquiryBodyContent;
+        this.enquiryDate = b.enquiryDate;
     }
 
     public static class Builder{
-        private String enquiryID;
-        private Customer customer;
+        private Long enquiryID;
+        private User customer;
         private String enquiryName;
         private String enquirySubjectLine;
         private String enquiryBodyContent;
+        private String enquiryDate;
 
-        public Builder setEnquiryID(String enquiryID){
+        public Builder setEnquiryID(Long enquiryID){
             this.enquiryID = enquiryID;
             return this;
         }
 
-        public Builder setCustomer(Customer customer) {
+        public Builder setCustomer(User customer) {
             this.customer = customer;
             return this;
         }
@@ -108,12 +121,18 @@ public class Enquiry implements Serializable {
             return this;
         }
 
+        public Builder setEnquiryDate(String enquiryDate) {
+            this.enquiryDate = enquiryDate;
+            return this;
+        }
+
         public Builder copy(Enquiry enquiry){
             this.enquiryID = enquiry.enquiryID;
             this.customer = enquiry.customer;
             this.enquiryName = enquiry.enquiryName;
             this.enquirySubjectLine = enquiry.enquirySubjectLine;
             this.enquiryBodyContent = enquiry.enquiryBodyContent;
+            this.enquiryDate = enquiry.enquiryDate;
             return this;
         }
 

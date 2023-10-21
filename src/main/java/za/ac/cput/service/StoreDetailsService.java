@@ -14,6 +14,6 @@ import java.util.Set;
     Date: 10 - 06 - 2023
  */
 
-public interface StoreDetailsService extends IService<StoreDetails, String> {
+public interface StoreDetailsService extends IService<StoreDetails, Long> {
     List<StoreDetails> getAll();
 }

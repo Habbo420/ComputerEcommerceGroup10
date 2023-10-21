@@ -23,7 +23,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public Address read(String addressID) {
+    public Address read(Long addressID) {
         return this.repository.findById(addressID).orElse(null);
     }
 
@@ -35,7 +35,7 @@ public class AddressServiceImpl implements AddressService {
     }
 
     @Override
-    public boolean delete(String addressID) {
+    public boolean delete(Long addressID) {
         if(this.repository.existsById(addressID)){
             this.repository.deleteById(addressID);
             return true;

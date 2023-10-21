@@ -25,7 +25,7 @@ public class CountryServiceImpl implements CountryService {
     public Country create(Country country){return repo.save(country);}
 
     @Override
-    public Country read (String id){return repo.findById(id).orElse(null);}
+    public Country read (Long id){return repo.findById(id).orElse(null);}
 
     @Override
     public Country update(Country country){
@@ -36,7 +36,7 @@ public class CountryServiceImpl implements CountryService {
     }
 
     @Override
-    public boolean delete(String id){
+    public boolean delete(Long id){
         if(this.repo.existsById(id)){
             this.repo.deleteById(id);
             return true;

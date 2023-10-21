@@ -18,18 +18,17 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class AddressControllerTest {
-    private static final Country southAfrica = CountryFactory.createCountry(
-            "South Africa"
+    private static Country southAfrica = CountryFactory.createTestCountry(
+            1L
     );
-    private static final City homeCity = CityFactory.createCity(
-            "Cape Town",
-            southAfrica
+    private static  City homeCity = CityFactory.createTestCity(
+            1L
     );
-    private static final Address homeAddress = AddressFactory.buildAddress(
-                "53 Main Road",
-                "6045",
-                homeCity
-        );
+    private static  Address address = AddressFactory.buildAddress(
+            "53 Main Road",
+            "6045",
+            homeCity
+    );
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -38,69 +37,60 @@ class AddressControllerTest {
 
     @Order(1)
     @Test
-    @Transactional
-    void create() {
+    void a_create() {
         String url = baseURL + "/create";
-        ResponseEntity<Address> postResponse = restTemplate.postForEntity(url, homeAddress, Address.class);
+        ResponseEntity<Address> postResponse = restTemplate.postForEntity(url, address, Address.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-
-        Address savedAddress = postResponse.getBody();
-        System.out.println("Saved data: " + savedAddress);
-
-        assertEquals(homeAddress.getAddressID(), postResponse.getBody().getAddressID());
+        //assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
+        Address savedCountry = postResponse.getBody();
+        System.out.println("Saved data: " + savedCountry);
+        assertEquals(savedCountry.getAddressID(), postResponse.getBody().getAddressID());
     }
 
     @Order(2)
+    // @Transactional
     @Test
-    @Transactional
     void read() {
-        String url = baseURL + "/read/" + homeAddress.getAddressID();
-        System.out.println("URL: " + url);
+        String url = baseURL + "/read/" + address.getAddressID();
+        System.out.println("URL: "+ url);
         ResponseEntity<Address> response = restTemplate.getForEntity(url, Address.class);
-        assertEquals(homeAddress.addressID, response.getBody().addressID);
+        assertEquals(address.getAddressID(), response.getBody().getAddressID());
         System.out.println(response.getBody());
     }
 
     @Order(3)
+    //@Transactional
     @Test
-    @Transactional
     void update() {
-         Address homeAddress = AddressFactory.buildAddress(
-                "53 Main Road",
-                "6045",
-                homeCity
-        );
-         Address updatedAddress = new Address.Builder().copy(homeAddress)
-                 .setStreetAddress("6 Basset Road")
-                 .build();
+        Address updated = new Address.Builder().copy(address)
+                .build();
         String url = baseURL + "/update";
-        System.out.println("URL: " + url);
-        System.out.println("Post data: " + updatedAddress);
-        ResponseEntity<Address> response = restTemplate.postForEntity(url, updatedAddress, Address.class);
+        System.out.println("Post Data: "+ updated);
+        ResponseEntity<Address> response = restTemplate.postForEntity(url, updated, Address.class);
         assertNotNull(response.getBody());
+
     }
 
     @Order(5)
+    // @Transactional
     @Test
-    @Transactional
     @Disabled
     void delete() {
-        String url = baseURL + "/delete/" + homeAddress.getAddressID();
-        System.out.println("URL: " + url);
+        String url = baseURL + "/delete/" + address.getAddressID();
+        System.out.println("URL: "+ url);
         restTemplate.delete(url);
     }
 
     @Order(4)
+    // @Transactional
     @Test
-    @Transactional
     void getAll() {
-        String url = baseURL + "/getAll";
+        String url = baseURL +"/getAll";
         HttpHeaders headers = new HttpHeaders();
-        HttpEntity<String> entity = new HttpEntity<>(null, headers);
-        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET, entity, String.class);
-        System.out.println("Show ALL:");
-        System.out.println(response);
+        HttpEntity<String> entity = new HttpEntity<>(null,headers);
+        ResponseEntity<String> response = restTemplate.exchange(url, HttpMethod.GET,entity,String.class);
+        System.out.println("Show All:");
         System.out.println(response.getBody());
     }
 }

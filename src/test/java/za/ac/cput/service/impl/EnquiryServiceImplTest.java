@@ -3,11 +3,11 @@ package za.ac.cput.service.impl;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import za.ac.cput.domain.Customer;
+import za.ac.cput.domain.User;
 import za.ac.cput.domain.Enquiry;
-import za.ac.cput.factory.CustomerFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.factory.EnquiryFactory;
-import za.ac.cput.repository.CustomerRepository;
+import za.ac.cput.repository.UserRepository;
 import za.ac.cput.repository.EnquiryRepository;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,17 +19,13 @@ private EnquiryServiceImpl service;
 @Autowired
 private EnquiryRepository repository;
     @Autowired
-    private CustomerRepository customerrepository;
+    private UserRepository customerrepository;
 
-    private static final Customer customer = CustomerFactory.buildTestCustomer(
-            "e0295579-70a0-48f3-b0c8-3f3fbe66b6cc",
-            "Luke",
-            "Ben",
-            "LW@gmail.com",
-            "wufh%2465"
+    private static final User customer = UserFactory.buildTestCustomer(
+            3L
     );
 
-    private static final Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product");
+    private static final Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product", "20-09-2023");
     @Test
     @Order(1)
     void create() {

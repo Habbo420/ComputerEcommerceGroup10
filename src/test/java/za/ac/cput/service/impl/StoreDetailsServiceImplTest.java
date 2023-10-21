@@ -27,20 +27,16 @@ class StoreDetailsServiceImplTest{
     @Autowired
     private StoreDetailsServiceImpl service;
 
-    private static Country southAfrica = CountryFactory.createCountry(
-            "South Africa"
-    );
-    private static City homeCity = CityFactory.createCity(
-            "Cape Town",
-            southAfrica
-    );
-    private static Address homeAddress = AddressFactory.buildAddress(
-            "53 Main Road",
-            "6045",
-            homeCity
+    private static final Address homeAddress = AddressFactory.buildTestAddress(
+            5L
     );
 
-    private static StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails("M computers",homeAddress,"0988422548","MComp@gmail.com");
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
+            "ExtraTecha",
+            homeAddress,
+            "066 224 9965",
+            "ExtraTecha@gmail.com"
+    );
 
     @Test
     @Order(1)
@@ -55,8 +51,9 @@ class StoreDetailsServiceImplTest{
     void read(){
         StoreDetails read = service.read(storeDetails.getStoreID());
         assertNotNull(read);
-        System.out.println("Read: "+read);
+        System.out.println("Read: " + read);
     }
+
 
     @Test
     @Order(3)

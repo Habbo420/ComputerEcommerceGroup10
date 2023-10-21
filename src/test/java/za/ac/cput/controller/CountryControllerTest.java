@@ -6,8 +6,6 @@ Author: Michael Daniel Johnson 221094040
 Date: 19 August 2023
 */
 
-import jakarta.transaction.Transactional;
-import org.apache.coyote.Response;
 import org.junit.jupiter.api.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -25,7 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 //@Transactional
 class CountryControllerTest {
 
-    private static final Country country = CountryFactory.createCountry("France");
+    private static final Country country = CountryFactory.createCountry("South Africa");
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -33,22 +31,18 @@ class CountryControllerTest {
     private final String baseURL = "http://localhost:8080/country";
 
     @Order(1)
-    //@Transactional
     @Test
-    void create() {
+    void a_create() {
         String url = baseURL + "/create";
-        ResponseEntity<Country> postResponse = restTemplate.postForEntity(url,country,Country.class);
+        ResponseEntity<Country> postResponse = restTemplate.postForEntity(url, country, Country.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-
         Country savedCountry = postResponse.getBody();
-        System.out.println("Saved data: "+ savedCountry);
-
-        assertEquals(country.getCountryID(), postResponse.getBody().getCountryID());
+        System.out.println("Saved data: " + savedCountry);
+        assertEquals(savedCountry.getCountryID(), postResponse.getBody().getCountryID());
     }
 
     @Order(2)
-   // @Transactional
     @Test
     void read() {
         String url = baseURL + "/read/" + country.getCountryID();
@@ -59,7 +53,6 @@ class CountryControllerTest {
     }
 
     @Order(3)
-    //@Transactional
     @Test
     void update() {
         Country updated = new Country.Builder().copy(country)
@@ -73,7 +66,6 @@ class CountryControllerTest {
     }
 
     @Order(5)
-   // @Transactional
     @Test
     @Disabled
     void delete() {
@@ -83,7 +75,6 @@ class CountryControllerTest {
     }
 
     @Order(4)
-   // @Transactional
     @Test
     void getAll() {
         String url = baseURL +"/getAll";

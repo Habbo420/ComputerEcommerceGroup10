@@ -15,7 +15,7 @@ public class StoreDetailsFactory {
 
         String storeID = Helper.generateID();
 
-        return new StoreDetails.Builder().setStoreID(storeID)
+        return new StoreDetails.Builder()
                 .setStoreName(storeName)
                 .setStoreAddress(address)
                 .setStoreTel(storeTel)
@@ -23,20 +23,11 @@ public class StoreDetailsFactory {
                 .build();
     }
 
-    public static StoreDetails buildTestStoreDetails(String id, String storeName, Address address, String storeTel, String storeEmail){
-        if (Helper.isNullOrEmpty(storeName))
-            return null;
+    public static StoreDetails buildTestStoreDetails(Long id){
 
-
-
-        if (!Helper.isValidEmail(storeEmail))
-            return null;
-
-        return new StoreDetails.Builder().setStoreID(id)
-                .setStoreName(storeName)
-                .setStoreAddress(address)
-                .setStoreTel(storeTel)
-                .setStoreEmail(storeEmail)
+        return new StoreDetails.Builder()
+                .setStoreID(id)
                 .build();
     }
+
 }

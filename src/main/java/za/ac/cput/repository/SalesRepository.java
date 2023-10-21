@@ -11,5 +11,5 @@ import org.springframework.stereotype.Repository;
 import za.ac.cput.domain.Sales;
 
 @Repository
-public interface SalesRepository extends JpaRepository<Sales, String> {
+public interface SalesRepository extends JpaRepository<Sales, Long> {
 }

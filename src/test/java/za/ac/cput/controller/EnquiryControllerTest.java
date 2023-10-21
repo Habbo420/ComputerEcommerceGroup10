@@ -9,9 +9,9 @@ import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
-import za.ac.cput.domain.Customer;
+import za.ac.cput.domain.User;
 import za.ac.cput.domain.Enquiry;
-import za.ac.cput.factory.CustomerFactory;
+import za.ac.cput.factory.UserFactory;
 import za.ac.cput.factory.EnquiryFactory;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -19,15 +19,12 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @Transactional
 class EnquiryControllerTest {
-    private static final Customer customer = CustomerFactory.buildTestCustomer(
-            "e0295579-70a0-48f3-b0c8-3f3fbe66b6cc",
-            "Luke",
-            "Ben",
-            "LW@gmail.com",
-            "wufh%2465"
+
+    private static final User customer = UserFactory.buildTestCustomer(
+            4L
     );
 
-    private static final Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product");
+    private static final Enquiry enquiry = EnquiryFactory.buildEnquiry(customer,"Delivery complaint","Did not get my delivery","Payed but did not receive my product", "20-09-2023");
 
     @Autowired
     private TestRestTemplate restTemplate;
@@ -41,11 +38,12 @@ class EnquiryControllerTest {
         ResponseEntity<Enquiry> postResponse = restTemplate.postForEntity(url, enquiry, Enquiry.class);
         assertNotNull(postResponse);
         assertNotNull(postResponse.getBody());
-
+        //assertEquals(postResponse.getStatusCode(), HttpStatus.OK);
         Enquiry savedEnquiry = postResponse.getBody();
-        System.out.println("Saved data: "+savedEnquiry);
-        assertEquals(enquiry.getEnquiryID(),postResponse.getBody().getEnquiryID());
+        System.out.println("Saved data: " + savedEnquiry);
+        assertEquals(savedEnquiry.getEnquiryID(), postResponse.getBody().getEnquiryID());
     }
+
 
     @Test
     @Order(2)

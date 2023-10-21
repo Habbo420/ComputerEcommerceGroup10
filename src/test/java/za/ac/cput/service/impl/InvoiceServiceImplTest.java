@@ -24,42 +24,18 @@ class InvoiceServiceImplTest {
     @Autowired
     private InvoiceServiceImpl service;
 
-    private static final Country southAfrica = CountryFactory.createCountry(
-            "South Africa"
+    private static final Sales sales = SalesFactory.buildTestSales(
+            6L
     );
-    private static final City homeCity = CityFactory.createCity(
-            "Cape Town",
-            southAfrica
-    );
-    private static final Address homeAddress = AddressFactory.buildAddress(
-            "53 Main Road",
-            "6045",
-            homeCity
-    );
-
-
-    private static final Customer customer = CustomerFactory.buildCustomer(
-            "Jason",
-            "King",
-            "KingJason@gmail.com",
-            "AlexDraai143"
-    );
-    private static final Sales sales = SalesFactory.buildSales(
-            "05-08-2023",
-            7000.00,
-            customer
-    );
-    private static final StoreDetails storeDetails = StoreDetailsFactory.buildStoreDetails(
-            "Evetech",
-            homeAddress,
-            "021 445 9912",
-            "techEve@gmail.com"
+    private static final StoreDetails storeDetails = StoreDetailsFactory.buildTestStoreDetails(
+            4L
     );
 
     private static final Invoice invoice = InvoiceFactory.buildInvoice(
             storeDetails,
             sales
     );
+
 
 
     @Test

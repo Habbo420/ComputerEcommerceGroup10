@@ -3,13 +3,11 @@ package za.ac.cput.service.impl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import za.ac.cput.domain.Customer;
 import za.ac.cput.domain.StoreDetails;
 import za.ac.cput.repository.StoreDetailsRepository;
 import za.ac.cput.service.StoreDetailsService;
 
 import java.util.List;
-import java.util.Set;
 
 /*
     StoreDetailsServiceImpl.java
@@ -31,7 +29,7 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
-    public StoreDetails read(String storeDetailsId){
+    public StoreDetails read(Long storeDetailsId){
         return this.repository.findById(storeDetailsId).orElse(null);
     }
 
@@ -44,7 +42,7 @@ public class StoreDetailsServiceImpl implements StoreDetailsService {
     }
 
     @Override
-    public boolean delete(String storeDetailsId){
+    public boolean delete(Long storeDetailsId){
        if (this.repository.existsById(storeDetailsId)){
            this.repository.deleteById(storeDetailsId);
            return true;

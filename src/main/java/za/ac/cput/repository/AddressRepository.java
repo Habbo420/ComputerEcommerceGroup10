@@ -8,5 +8,5 @@ import za.ac.cput.domain.Address;
     Date: 02 - 04 - 2022
  */
 @Repository
-public interface AddressRepository extends JpaRepository<Address, String> {
+public interface AddressRepository extends JpaRepository<Address, Long> {
 }
